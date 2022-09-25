@@ -63,7 +63,7 @@ public class Board extends JPanel implements ActionListener {
     private static ArrayList<Image> getImagesArrayList() throws Exception {
         ArrayList<Image> images = new ArrayList<>();
         for(int i =0; i<NUM_ENEMIES; i++){
-            Image enemy =  new ImageIcon("C:\\StudentWork\\test\\swingui\\src\\enemy.png").getImage();
+            Image enemy =  new ImageIcon("C:\\StudentWork\\Project\\topgun\\src\\enemy.png").getImage();
             images.add(enemy);
         }
         return images;
