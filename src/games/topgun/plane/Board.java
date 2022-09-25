@@ -21,15 +21,15 @@ public class Board extends JPanel implements ActionListener {
     int xPilotStart = 250;
     int yPilotStart = 450;
     int offset = PANEL_WIDTH / NUM_ENEMIES;
-
+    final static String filepath = "C:\\StudentWork\\Project\\topgun\\src\\games\\topgun\\plane\\";
 
 
     Board(){
         this.setPreferredSize(new Dimension(PANEL_WIDTH,PANEL_HEIGHT));
         this.setBackground(Color.BLACK);
-        enemy = new ImageIcon("C:\\StudentWork\\Project\\topgun\\src\\enemy.png").getImage();
-        pilot = new ImageIcon("C:\\StudentWork\\Project\\topgun\\src\\pilot.png").getImage();
-        backgroundImage = new ImageIcon("C:\\StudentWork\\Project\\topgun\\src\\terrain.jpg").getImage();
+        enemy = new ImageIcon(filepath+"enemy.png").getImage();
+        pilot = new ImageIcon(filepath+"pilot.png").getImage();
+        backgroundImage = new ImageIcon(filepath+"terrain.jpg").getImage();
         timer = new Timer(100,this );
         timer.start();
     }
@@ -63,7 +63,7 @@ public class Board extends JPanel implements ActionListener {
     private static ArrayList<Image> getImagesArrayList() throws Exception {
         ArrayList<Image> images = new ArrayList<>();
         for(int i =0; i<NUM_ENEMIES; i++){
-            Image enemy =  new ImageIcon("C:\\StudentWork\\Project\\topgun\\src\\enemy.png").getImage();
+            Image enemy =  new ImageIcon(filepath+"enemy.png").getImage();
             images.add(enemy);
         }
         return images;
