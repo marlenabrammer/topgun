@@ -27,9 +27,9 @@ public class Board extends JPanel implements ActionListener {
     Board(){
         this.setPreferredSize(new Dimension(PANEL_WIDTH,PANEL_HEIGHT));
         this.setBackground(Color.BLACK);
-        enemy = new ImageIcon("C:\\StudentWork\\test\\swingui\\src\\enemy.png").getImage();
-        pilot = new ImageIcon("C:\\StudentWork\\test\\swingui\\src\\pilot.png").getImage();
-        backgroundImage = new ImageIcon("C:\\StudentWork\\test\\swingui\\src\\terrain.jpg").getImage();
+        enemy = new ImageIcon("C:\\StudentWork\\Project\\topgun\\src\\enemy.png").getImage();
+        pilot = new ImageIcon("C:\\StudentWork\\Project\\topgun\\src\\pilot.png").getImage();
+        backgroundImage = new ImageIcon("C:\\StudentWork\\Project\\topgun\\src\\terrain.jpg").getImage();
         timer = new Timer(100,this );
         timer.start();
     }
