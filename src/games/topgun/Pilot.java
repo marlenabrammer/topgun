@@ -23,14 +23,14 @@ class Pilot extends Plane {
         setY_coordinate(START_Y_COORDINATE);
     }
 
-    public void act() {
-         x_coordinate += x_prime;
-         if (x_coordinate <= 2) {
-             x_coordinate = 2;
+    public void move() {
+         int x = getX_coordinate() + x();
+         if (x <= 2) {
+             x = 2;
          }
 
-         if (x_coordinate >= 358 - 2 * width) {
-             x_coordinate = 358 - 2 * width;
+         if (x >= 358 - 2 * width) {
+             x = 358 - 2 * width;
          }
     }
 
@@ -38,11 +38,11 @@ class Pilot extends Plane {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            x_prime = -2;
+            setX_prime(-2);
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            x_prime = 2;
+            setX_prime(2);
         }
     }
 
@@ -50,11 +50,11 @@ class Pilot extends Plane {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            x_prime = 0;
+            setX_prime(0);
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            x_prime = 0;
+            setX_prime(0);
         }
     }
 }

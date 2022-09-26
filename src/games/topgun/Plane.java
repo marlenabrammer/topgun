@@ -7,7 +7,7 @@ class Plane {
     private Image image;
     private boolean isDead;
 
-    private int x_coordinate;
+    private int x_coord;
     private int y_coordinate;
     private int x_prime;
 
@@ -44,11 +44,11 @@ class Plane {
     }
 
     public int getX_coordinate() {
-        return x_coordinate;
+        return x_coord;
     }
 
     public void setX_coordinate(int x_coordinate) {
-        this.x_coordinate = x_coordinate;
+        this.x_coord = x_coordinate;
     }
 
     public int getY_coordinate() {
@@ -59,7 +59,7 @@ class Plane {
         this.y_coordinate = y_coordinate;
     }
 
-    public int getX_prime() {
+    public int x() {
         return x_prime;
     }
 
