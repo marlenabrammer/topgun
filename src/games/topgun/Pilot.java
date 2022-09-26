@@ -1,6 +1,6 @@
 package games.topgun;
 
-import games.topgun.Commons;
+
 import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
 
@@ -30,8 +30,8 @@ class Pilot extends Plane {
              setX_coordinate(2);
          }
 
-         if (getX_coordinate() >= Commons.BOARD_WIDTH - 2 * width) {
-             setX_coordinate(Commons.BOARD_WIDTH - 2 * width);
+         if (getX_coordinate() >= 500 - 2 * width) { //TODO:FIX MAGIC NUMBER
+             setX_coordinate(500 - 2 * width);
          }
     }
 

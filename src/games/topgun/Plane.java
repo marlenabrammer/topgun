@@ -1,5 +1,6 @@
 package games.topgun;
 
+import javax.swing.*;
 import java.awt.*;
 
 class Plane {
@@ -9,7 +10,7 @@ class Plane {
     private boolean dying;
 
     private int x_coordinate;
-    private int y_coordinate;
+    private int y_coord;
     private int x_prime;
 
     // Constructor(s)
@@ -56,11 +57,11 @@ class Plane {
     }
 
     public int getY_coordinate() {
-        return y_coordinate;
+        return y_coord;
     }
 
     public void setY_coordinate(int y_coordinate) {
-        this.y_coordinate = y_coordinate;
+        this.y_coord = y_coordinate;
     }
 
     public int getX_prime() {
