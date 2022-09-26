@@ -13,7 +13,7 @@ class Enemy extends Plane {
         setX_coordinate(x_coord);
         setY_coordinate(y_coord);
 
-        weapon = new Weapon(x_coordinate, y_coordinate);
+        weapon = new Weapon(x_coord, y_coord);
 
         String enemyPath = "img/";
         ImageIcon enemy = new ImageIcon(enemyPath);
@@ -21,7 +21,7 @@ class Enemy extends Plane {
     }
 
     public void move(int direction) {
-        x_coordinate += direction;
+        int x = getX_coordinate() + direction;
     }
 
     public Weapon getWeapon() {
@@ -38,8 +38,8 @@ class Enemy extends Plane {
         private void initWeapon(int x_coord, int y_coord) {
             setDestroyed(true);
 
-            x_coordinate = x_coord;
-            y_coordinate = y_coord;
+            setX_coordinate(x_coord);
+            setY_coordinate(y_coord);
 
             // String weaponPath = "img/";
             // ImageIcon weapon = new ImageIcon(weaponPath);
