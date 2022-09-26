@@ -3,22 +3,26 @@ package games.topgun;
 import java.awt.*;
 
 class Plane {
+    // Instance variables
     private boolean visible;
     private Image image;
-    private boolean isDead;
+    private boolean dying;
 
-    private int x_coord;
+    private int x_coordinate;
     private int y_coordinate;
     private int x_prime;
 
+    // Constructor(s)
     public Plane() {
         setVisible(true);
     }
 
+    // Business method(s)
     public void die() {
         visible = false;
     }
 
+    // Accessor(s)
     public boolean isVisible() {
         return visible;
     }
@@ -35,20 +39,20 @@ class Plane {
         this.image = image;
     }
 
-    public boolean isDead() {
-        return isDead;
+    public boolean isDying() {
+        return dying;
     }
 
-    public void setDead(boolean dead) {
-        isDead = dead;
+    public void setDying(boolean dying) {
+        this.dying = dying;
     }
 
     public int getX_coordinate() {
-        return x_coord;
+        return x_coordinate;
     }
 
     public void setX_coordinate(int x_coordinate) {
-        this.x_coord = x_coordinate;
+        this.x_coordinate = x_coordinate;
     }
 
     public int getY_coordinate() {
@@ -59,7 +63,7 @@ class Plane {
         this.y_coordinate = y_coordinate;
     }
 
-    public int x() {
+    public int getX_prime() {
         return x_prime;
     }
 
