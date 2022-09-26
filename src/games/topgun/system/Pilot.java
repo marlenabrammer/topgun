@@ -1,4 +1,4 @@
-package games.topgun.plane;
+package games.topgun.system;
 
 class Pilot extends Plane {
 
