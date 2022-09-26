@@ -7,9 +7,9 @@ class Plane {
     private Image image;
     private boolean isDead;
 
-    int x_coordinate;
-    int y_coordinate;
-    int x_prime;
+    private int x_coordinate;
+    private int y_coordinate;
+    private int x_prime;
 
     public Plane() {
         setVisible(true);
