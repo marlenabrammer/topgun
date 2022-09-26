@@ -15,7 +15,7 @@ class Enemy extends Plane {
 
         weapon = new Bomb(x_coord, y_coord);
 
-        String enemyPath = "img/";
+        String enemyPath = "img/enemy.png";
         ImageIcon enemy = new ImageIcon(enemyPath);
         setImage(enemy.getImage());
     }
