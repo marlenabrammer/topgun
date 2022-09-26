@@ -3,14 +3,13 @@ package games.topgun.system;
 import java.awt.*;
 
 class Plane {
-
     private boolean visible;
     private Image image;
     private boolean isDead;
 
-    private int x_coordinate;
-    private int y_coordinate;
-    private int x_prime;
+    int x_coordinate;
+    int y_coordinate;
+    int x_prime;
 
     public Plane() {
         setVisible(true);
