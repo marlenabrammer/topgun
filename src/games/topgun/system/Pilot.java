@@ -1,7 +1,7 @@
 package games.topgun.system;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.KeyEvent;
 
 class Pilot extends Plane {
     private int width;
@@ -9,10 +9,10 @@ class Pilot extends Plane {
     private int START_Y_COORDINATE = 280;
 
     public Pilot() {
-        initPlayer();
+        initPilot();
     }
 
-    private void initPlayer() {
+    private void initPilot() {
         String pilotPath = "/img/pilot.png";
         ImageIcon pilot = new ImageIcon(pilotPath);
 
@@ -28,5 +28,33 @@ class Pilot extends Plane {
          if (x_coordinate <= 2) {
              x_coordinate = 2;
          }
+
+         if (x_coordinate >= 358 - 2 * width) {
+             x_coordinate = 358 - 2 * width;
+         }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            x_prime = -2;
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+            x_prime = 2;
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            x_prime = 0;
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+            x_prime = 0;
+        }
     }
 }
