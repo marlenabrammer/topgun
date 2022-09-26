@@ -1,4 +1,4 @@
-package games.topgun.system;
+package games.topgun;
 
 import javax.swing.*;
 
