@@ -1,4 +1,4 @@
-package games.topgun.plane;
+package games.topgun.system;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,15 +21,15 @@ public class Board extends JPanel implements ActionListener {
     int xPilotStart = 250;
     int yPilotStart = 450;
     int offset = PANEL_WIDTH / NUM_ENEMIES;
-    final static String filepath = "C:\\StudentWork\\Project\\topgun\\src\\games\\topgun\\plane\\";
+    final static String filepath = "img/";
 
 
     Board(){
         this.setPreferredSize(new Dimension(PANEL_WIDTH,PANEL_HEIGHT));
         this.setBackground(Color.BLACK);
-        enemy = new ImageIcon(filepath+"enemy.png").getImage();
-        pilot = new ImageIcon(filepath+"pilot.png").getImage();
-        backgroundImage = new ImageIcon(filepath+"terrain.jpg").getImage();
+        enemy = new ImageIcon(filepath + "enemy.png").getImage();
+        pilot = new ImageIcon(filepath + "pilot.png").getImage();
+        backgroundImage = new ImageIcon(filepath + "terrain.jpg").getImage();
         timer = new Timer(100,this );
         timer.start();
     }

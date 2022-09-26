@@ -1,4 +1,4 @@
-package games.topgun.plane;
+package games.topgun.system;
 
 import javax.swing.*;
 
@@ -6,7 +6,7 @@ public class Frame extends JFrame {
 
     Board panel;
 
-    Frame(){
+    public Frame(){
         panel = new Board();
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
