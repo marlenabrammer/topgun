@@ -10,8 +10,8 @@ public class Board extends JPanel implements ActionListener {
     final static int PANEL_WIDTH = 500;
     final static int PANEL_HEIGHT = 500;
     final static int NUM_ENEMIES = 4;
-    Image enemy;
-    Image pilot;
+    Enemy enemy;
+    Pilot pilot;
     Image backgroundImage;
     Timer timer;
     int xVelocity =1;
@@ -27,8 +27,8 @@ public class Board extends JPanel implements ActionListener {
     Board(){
         this.setPreferredSize(new Dimension(PANEL_WIDTH,PANEL_HEIGHT));
         this.setBackground(Color.BLACK);
-        enemy = new ImageIcon(filepath + "enemy.png").getImage();
-        pilot = new ImageIcon(filepath + "pilot.png").getImage();
+        enemy = new Enemy(0,0);
+        pilot = new Pilot();
         backgroundImage = new ImageIcon(filepath + "terrain.jpg").getImage();
         timer = new Timer(100,this );
         timer.start();
@@ -38,8 +38,8 @@ public class Board extends JPanel implements ActionListener {
         super.paint(g); //this will paint the background
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(backgroundImage, 0,0,null);
-        //  g2D.drawImage(enemy, x,y,null);
-        g2D.drawImage(pilot, xPilotStart,yPilotStart,null);
+        //g2D.drawImage(enemy.getImage(), x,y,null);
+        g2D.drawImage(pilot.getImage(), xPilotStart,yPilotStart,null);
         for(int i=0; i<NUM_ENEMIES; i++) {
             if(i==0){
                 drawEnemy(g2D,x);
@@ -57,7 +57,7 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         moveEnemy();
-        //  movePlane();
+        pilot.move();
     }
 
     private static ArrayList<Image> getImagesArrayList() throws Exception {
@@ -70,10 +70,10 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void drawEnemy(Graphics g, int offset){
-        g.drawImage(enemy, offset, y, null);
+        g.drawImage(enemy.getImage(), offset, y, null);
     }
     private void moveEnemy(){
-        if (y>=PANEL_HEIGHT-enemy.getWidth(null)){ // if you don't want it to go off page do || y<0so that it doesn't go off the border
+        if (y>=PANEL_HEIGHT){ // if you don't want it to go off page do || y<0so that it doesn't go off the border
             yVelocity = yVelocity * -1;
         } //goes up and down
         y += yVelocity;
@@ -81,7 +81,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void movePlane(){
-        if (x>=PANEL_WIDTH-pilot.getWidth(null) || x< 0){ //so that it doesn't go off the border
+        if (x>=PANEL_WIDTH-pilot.getImage().getWidth(null) || x< 0){ //so that it doesn't go off the border
             xVelocity = xVelocity * -1;
         } //goes back and forth
         x += xVelocity;

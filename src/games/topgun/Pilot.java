@@ -13,7 +13,7 @@ class Pilot extends Plane {
     }
 
     private void initPilot() {
-        String pilotPath = "/img/pilot.png";
+        String pilotPath = "img/pilot.png";
         ImageIcon pilot = new ImageIcon(pilotPath);
 
         width = pilot.getImage().getWidth(null);
