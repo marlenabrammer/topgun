@@ -1,12 +1,11 @@
 package games.topgun;
 
-import javax.swing.*;
+import games.topgun.Commons;
+import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
 
 class Pilot extends Plane {
     private int width;
-    private int START_X_COORDINATE = 270;
-    private int START_Y_COORDINATE = 280;
 
     public Pilot() {
         initPilot();
@@ -15,22 +14,24 @@ class Pilot extends Plane {
     private void initPilot() {
         String pilotPath = "img/pilot.png";
         ImageIcon pilot = new ImageIcon(pilotPath);
-
         width = pilot.getImage().getWidth(null);
         setImage(pilot.getImage());
 
+        int START_X_COORDINATE = 270;
         setX_coordinate(START_X_COORDINATE);
+
+        int START_Y_COORDINATE = 270;
         setY_coordinate(START_Y_COORDINATE);
     }
 
-    public void move() {
-         int x = getX_coordinate() + x();
-         if (x <= 2) {
-             x = 2;
+    public void act() {
+         setX_coordinate(getX_coordinate() + getX_prime());
+         if (getX_coordinate() <= 2) {
+             setX_coordinate(2);
          }
 
-         if (x >= 358 - 2 * width) {
-             x = 358 - 2 * width;
+         if (getX_coordinate() >= Commons.BOARD_WIDTH - 2 * width) {
+             setX_coordinate(Commons.BOARD_WIDTH - 2 * width);
          }
     }
 

@@ -1,17 +1,19 @@
 package games.topgun;
 
+import javax.swing.ImageIcon;
+
 public class Weapon extends Plane {
     public Weapon() {
     }
 
     public Weapon(int x, int y) {
-        initWeapon(x, y);
+        initShot(x, y);
     }
 
-    private void initWeapon(int x, int y) {
-        // String weaponPath
-        // ImageIcon weapon
-        // setImage(weapon.getImage())
+    private void initShot(int x, int y) {
+         String weaponPath = "img/bullet.png";
+         ImageIcon weapon = new ImageIcon(weaponPath);
+         setImage(weapon.getImage());
 
         int H_SPACE = 6;
         setX_coordinate(x + H_SPACE);
