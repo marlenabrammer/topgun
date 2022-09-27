@@ -3,7 +3,7 @@ package games.topgun;
 import javax.swing.*;
 import java.awt.*;
 
-class Plane {
+public class Plane extends JPanel{
     // Instance variables
     private boolean visible;
     private Image image;
