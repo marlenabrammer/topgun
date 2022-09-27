@@ -3,7 +3,7 @@ package games.topgun;
 import javax.swing.*;
 import java.awt.*;
 
-public class Plane extends JPanel{
+public class Plane {
     // Instance variables
     private boolean visible;
     private Image image;
@@ -20,7 +20,7 @@ public class Plane extends JPanel{
 
     // Business method(s)
     public void die() {
-        visible = false;
+        setVisible(false);
     }
 
     // Accessor(s)
