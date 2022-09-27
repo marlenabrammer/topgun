@@ -8,10 +8,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Board extends JPanel implements ActionListener {
+public class Board extends JPanel  {
     final static int PANEL_WIDTH = 500;
     final static int PANEL_HEIGHT = 500;
     final static int NUM_ENEMIES = 4;
+    private Dimension d;
     Enemy enemy;
     Pilot pilot;
     Weapon weapon;
@@ -23,68 +24,127 @@ public class Board extends JPanel implements ActionListener {
     int x =0;
     int y =0;
     int y_weapon = y+45;
-    int xPilotStart = 250;
     int yPilotStart = 450;
     int offset = PANEL_WIDTH / NUM_ENEMIES;
     final static String filepath = "img/";
     private static ArrayList<Enemy> enemies = new ArrayList<>();
 
 
-    Board(){
+    public Board() {
+
+        initBoard();
+
+    }
+
+    private void initBoard() {
+
+        addKeyListener(new TAdapter());
+        setFocusable(true);
+        d = new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
+        timer = new Timer(15, new GameCycle());
+        gameInit();
+
+        timer.start();
+
+
+    }
+
+    private void gameInit() {
+
         this.setPreferredSize(new Dimension(PANEL_WIDTH,PANEL_HEIGHT));
-        this.setBackground(Color.BLACK);
-        enemy = new Enemy(0,0);
-        enemies.add(enemy);
-        enemies.add(new Enemy(0,0));
-        enemies.add(new Enemy(0,0));
         pilot = new Pilot();
         backgroundImage = new ImageIcon(filepath + "terrain.jpg").getImage();
-        timer = new Timer(100,this );
-        timer.start();
-    }
+        System.out.println(enemies.size());
 
-    public void paint(Graphics g){
-        super.paint(g); //this will paint the background
-        Graphics2D g2D = (Graphics2D) g;
-        g2D.drawImage(backgroundImage, 0,0,null);
-        //g2D.drawImage(enemy.getImage(), x,y,null);
-        g2D.drawImage(pilot.getImage(), xPilotStart,yPilotStart,null);
-       // g2D.drawImage(weapon.getImage(),offset,0,null);
-        for(int i=0; i<NUM_ENEMIES; i++) { //location of the enemy planes + bullets at first
-                drawEnemy(g2D,x+offset*i);
-                drawEnemyWeapon(g2D,x+offset*i);
+        for(int i=0; i<NUM_ENEMIES; i++){
+            enemies.add(new Enemy(x+offset*i,y));
         }
+        System.out.println(enemies.size());
     }
 
+    private void drawPilot(Graphics g) {
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        moveEnemy();
-        //moveEnemyShot();
+//        if (pilot.isVisible()) {
+
+        g.drawImage(pilot.getImage(), pilot.getX_coordinate(), yPilotStart, this);
+//        }
+    }
+
+    private void drawBackground(Graphics g){
+        g.drawImage(backgroundImage,0,0,this);
+    }
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        doDrawing(g) ;
+
+    }
+
+    private void doDrawing(Graphics g) {
+        drawBackground(g);
+        drawPilot(g);
+
+        for(Enemy enemy: enemies) { //location of the enemy planes + bullets at first
+            drawEnemy(g,enemy.getX_coordinate());
+            drawEnemyWeapon(g,enemy.getX_coordinate());
+        }
+
+    }
+
+    public void update () {
+
+        pilot.act();
+
+       for(Enemy enemy: enemies) {
+           enemy.move();
+       }
+
+    }
+
+    private void doGameCycle () {
+
+        update();
         repaint();
 
     }
+    private class GameCycle implements ActionListener {
 
-    private static ArrayList<Enemy> getEnemiesArrayList() throws Exception {
-        return enemies;
+        @Override
+        public void actionPerformed (ActionEvent e) {
+            doGameCycle();
+
+        }
     }
 
+        /*    @Override
+            public void actionPerformed(ActionEvent e) {
+        //        moveEnemy();
+                //moveEnemyShot();
+                repaint();
+
+            }*/
+
+        /*    private static ArrayList<Enemy> getEnemiesArrayList() throws Exception {
+                return enemies;
+            }*/
+
     private void drawEnemy(Graphics g, int offset){
-        for (Enemy enemy : enemies){
+            for (Enemy enemy : enemies){
 
             if (enemy.isVisible()){
                 g.drawImage(enemy.getImage(), offset, y, null);
 
             }
-            else if(enemy.getY_coordinate() == PANEL_HEIGHT)
-            {
+            else if(enemy.getY_coordinate() == PANEL_HEIGHT) {
 
             }
             if(enemy.isDying()){
-                enemy.die();
+                        enemy.die();
+                    }
+                }
             }
-        }
-    }
+
 
     private void drawEnemyWeapon(Graphics g, int offset) {
         for (Enemy enemy : enemies) {
@@ -93,19 +153,6 @@ public class Board extends JPanel implements ActionListener {
                 g.drawImage(weapon.getImage(), offset, y+enemy.getImage().getHeight(null), null);
             }
         }
-    }
-
-//    private void update(){
-//        //call the pilot
-//        //call the enemies
-//        //call the initial weapons
-//        //do logic for bullet from enemy hitting pilot
-//        //do logic for bullet from pilot hitting enemy
-//
-//    }
-
-    private void moveEnemy(){
-        y += yVelocity;
     }
 
     private void moveEnemyShot(){
@@ -134,7 +181,7 @@ public class Board extends JPanel implements ActionListener {
             pilot.keyPressed(e);
 
             int x = pilot.getX_coordinate();
-            int y = pilot.getY_coordinate();
+
 
             int key = e.getKeyCode();
 
@@ -144,7 +191,7 @@ public class Board extends JPanel implements ActionListener {
 
                 if (!weapon.isVisible()) {
 
-                    weapon = new Weapon(x, y);
+                    weapon = new Weapon(x, yPilotStart);
                 }
                 //}
             }
