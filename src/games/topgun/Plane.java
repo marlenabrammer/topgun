@@ -1,16 +1,15 @@
 package games.topgun;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Image;
 
-public class Plane {
+class Plane {
     // Instance variables
     private boolean visible;
     private Image image;
-    private boolean dying;
+    private boolean dead;
 
     private int x_coordinate;
-    private int y_coord;
+    private int y_coordinate;
     private int x_prime;
 
     // Constructor(s)
@@ -40,12 +39,12 @@ public class Plane {
         this.image = image;
     }
 
-    public boolean isDying() {
-        return dying;
+    public boolean isDead() {
+        return dead;
     }
 
-    public void setDying(boolean dying) {
-        this.dying = dying;
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     public int getX_coordinate() {
@@ -57,11 +56,11 @@ public class Plane {
     }
 
     public int getY_coordinate() {
-        return y_coord;
+        return y_coordinate;
     }
 
     public void setY_coordinate(int y_coordinate) {
-        this.y_coord = y_coordinate;
+        this.y_coordinate = y_coordinate;
     }
 
     public int getX_prime() {
