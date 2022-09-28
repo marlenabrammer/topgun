@@ -3,7 +3,7 @@ package games.topgun;
 import javax.swing.ImageIcon;
 
 class Enemy extends Plane {
-    private Missile weapon;
+    private Missile missile;
     private final int y_Velocity = 1;
 
     public Enemy(int x_coordinate, int y_coordinate) {
@@ -14,7 +14,7 @@ class Enemy extends Plane {
         setX_coordinate(x_coordinate);
         setY_coordinate(y_coordinate);
 
-        weapon = new Missile(x_coordinate, y_coordinate);
+        missile = new Missile(x_coordinate, y_coordinate);
 
         String enemyPath = "img/enemy.png";
         ImageIcon enemy = new ImageIcon(enemyPath);
@@ -25,8 +25,8 @@ class Enemy extends Plane {
         setY_coordinate(getY_coordinate() + y_Velocity);
     }
 
-    public Missile getWeapon() {
-        return weapon;
+    public Missile getMissile() {
+        return missile;
     }
 
     public class Missile extends Plane {

@@ -15,10 +15,10 @@ public class Weapon extends Plane {
         ImageIcon weapon = new ImageIcon(pilotWeapon);
         setImage(weapon.getImage());
 
-        int H_SPACE = 6;
-        setX_coordinate(x_coordinate + H_SPACE);
+        int horizontal = 1;
+        setX_coordinate(x_coordinate + horizontal);
 
-        int V_SPACE = 1;
-        setY_coordinate(y_coordinate - V_SPACE);
+        int vertical = 6;
+        setY_coordinate(y_coordinate - vertical);
     }
 }

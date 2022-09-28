@@ -161,21 +161,29 @@ public class Board extends JPanel  {
             } else {
                 weapon.setY_coordinate(y);
             }
+        }
 
+        for (Enemy enemy : enemies) {
+            if (enemy.isVisible()) {
+
+                int y = enemy.getY_coordinate();
+
+                if (y > 500) {
+                    enemy.die();
+                }
+            }
+            enemy.move();
         }
     }
     private void doGameCycle () {
-
         update();
         repaint();
-
     }
     private class GameCycle implements ActionListener {
 
         @Override
         public void actionPerformed (ActionEvent e) {
             doGameCycle();
-
         }
     }
 
@@ -183,7 +191,6 @@ public class Board extends JPanel  {
             for (Enemy enemy : enemies){
             if (enemy.isVisible()){
                 g.drawImage(enemy.getImage(), offset, y, null);
-
             }
 
             if(enemy.isDead()){
@@ -195,7 +202,7 @@ public class Board extends JPanel  {
 
     private void drawEnemyWeapon(Graphics g, int offset) {
         for (Enemy enemy : enemies) {
-            Enemy.Missile weapon = enemy.getWeapon();
+            Enemy.Missile weapon = enemy.getMissile();
             if (enemy.isVisible()) {
                 g.drawImage(weapon.getImage(), offset, y+enemy.getImage().getHeight(null), null);
             }
