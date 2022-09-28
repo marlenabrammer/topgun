@@ -1,6 +1,8 @@
-package games.topgun;
+ package games.topgun;
 
 import javax.swing.ImageIcon;
+
+import javax.swing.*;
 
 public class Weapon extends Plane {
     public Weapon() {
@@ -15,10 +17,17 @@ public class Weapon extends Plane {
         ImageIcon weapon = new ImageIcon(pilotWeapon);
         setImage(weapon.getImage());
 
+
+        var shotImg = "src/images/shot.png";
+        var ii = new ImageIcon(shotImg);
+        setImage(ii.getImage());
+
         int H_SPACE = 6;
         setX_coordinate(x_coordinate + H_SPACE);
 
-        int V_SPACE = 1;
+        int V_SPACE = 20;
         setY_coordinate(y_coordinate - V_SPACE);
     }
+
+
 }
