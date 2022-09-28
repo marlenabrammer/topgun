@@ -1,4 +1,6 @@
-package games.topgun;
+package games.topgun.app;
+
+import games.topgun.Board;
 
 import javax.swing.*;
 

@@ -1,10 +1,7 @@
 package games.topgun;
 
-
 import javax.swing.ImageIcon;
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class Pilot extends Plane {
     private int width;
@@ -53,7 +50,7 @@ public class Pilot extends Plane {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) { //KeyEvent.VK_LEFT 74=j
+        if (key == KeyEvent.VK_LEFT) {
             setX_prime(0);
         }
 

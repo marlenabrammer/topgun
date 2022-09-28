@@ -1,7 +1,11 @@
 package games.topgun;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import javax.swing.ImageIcon;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -15,12 +19,12 @@ public class Board extends JPanel  {
     private Dimension d;
     private Boolean playingGame = true;
     private int enemiesUnalived = 0;
-    Pilot pilot;
-    Weapon weapon;
-    Image backgroundImage;
-    Image explosion;
-    Image gameOverImage;
-    Timer timer;
+    private Pilot pilot;
+    private Weapon weapon;
+    private Image backgroundImage;
+    private Image explosion;
+    private Image gameOverImage;
+    private Timer timer;
     private int xVelocity =1;
     private int x =0;
     private int y =0;
@@ -30,9 +34,7 @@ public class Board extends JPanel  {
 
 
     public Board() {
-
         initBoard();
-
     }
 
     private void initBoard() {
@@ -143,7 +145,7 @@ public class Board extends JPanel  {
                     {
                         explosion = new ImageIcon(filepath+ "bang.png").getImage();
                         enemy.setImage(explosion);
-                        enemy.setDying(true);
+                        enemy.setDead(true);
                         enemiesUnalived++;
                         System.out.println("count of dead enemies: " + enemiesUnalived);
                         weapon.die();
@@ -177,18 +179,6 @@ public class Board extends JPanel  {
         }
     }
 
-        /*    @Override
-            public void actionPerformed(ActionEvent e) {
-        //        moveEnemy();
-                //moveEnemyShot();
-                repaint();
-
-            }*/
-
-        /*    private static ArrayList<Enemy> getEnemiesArrayList() throws Exception {
-                return enemies;
-            }*/
-
     private void drawEnemy(Graphics g, int offset){
             for (Enemy enemy : enemies){
             if (enemy.isVisible()){
@@ -196,7 +186,7 @@ public class Board extends JPanel  {
 
             }
 
-            if(enemy.isDying()){
+            if(enemy.isDead()){
                  enemy.die();
                     }
                 }
@@ -205,20 +195,11 @@ public class Board extends JPanel  {
 
     private void drawEnemyWeapon(Graphics g, int offset) {
         for (Enemy enemy : enemies) {
-            Enemy.Bomb weapon = enemy.getWeapon();
+            Enemy.Missile weapon = enemy.getWeapon();
             if (enemy.isVisible()) {
                 g.drawImage(weapon.getImage(), offset, y+enemy.getImage().getHeight(null), null);
             }
         }
-    }
-
-
-    private void movePlane(){
-        if (x>=PANEL_WIDTH-pilot.getImage().getWidth(null) || x< 0){ //so that it doesn't go off the border
-            xVelocity = xVelocity * -1;
-        } //goes back and forth
-        x += xVelocity;
-        repaint();
     }
 
     private class TAdapter extends KeyAdapter {

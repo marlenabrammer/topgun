@@ -1,20 +1,20 @@
 package games.topgun;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 
 class Enemy extends Plane {
-    private Bomb weapon;
-    private int yVelocity = 3;
+    private Missile weapon;
+    private final int y_Velocity = 3;
 
-    public Enemy(int x_coord, int y_coord) {
-        initEnemy(x_coord, y_coord);
+    public Enemy(int x_coordinate, int y_coordinate) {
+        initEnemy(x_coordinate, y_coordinate);
     }
 
-    private void initEnemy(int x_coord, int y_coord) {
-        setX_coordinate(x_coord);
-        setY_coordinate(y_coord);
+    private void initEnemy(int x_coordinate, int y_coordinate) {
+        setX_coordinate(x_coordinate);
+        setY_coordinate(y_coordinate);
 
-        weapon = new Bomb(x_coord, y_coord);
+        weapon = new Missile(x_coordinate, y_coordinate);
 
         String enemyPath = "img/enemy.png";
         ImageIcon enemy = new ImageIcon(enemyPath);
@@ -22,26 +22,26 @@ class Enemy extends Plane {
     }
 
     public void move() {
-        setY_coordinate(getY_coordinate()+yVelocity);
+        setY_coordinate(getY_coordinate() + y_Velocity);
        // repaint();
     }
 
-    public Bomb getWeapon() {
+    public Missile getWeapon() {
         return weapon;
     }
 
-    public class Bomb extends Plane {
+    public class Missile extends Plane {
         private boolean destroyed;
 
-        public Bomb(int x_coord, int y_coord) {
-            initWeapon(x_coord, y_coord);
+        public Missile(int x_coordinate, int y_coordinate) {
+            initWeapon(x_coordinate, y_coordinate);
         }
 
-        private void initWeapon(int x_coord, int y_coord) {
+        private void initWeapon(int x_coordinate, int y_coordinate) {
             setDestroyed(true);
 
-            setX_coordinate(x_coord);
-            setY_coordinate(y_coord);
+            setX_coordinate(x_coordinate);
+            setY_coordinate(y_coordinate);
 
             String weaponPath = "img/bullet_enemy.png";
             ImageIcon weapon = new ImageIcon(weaponPath);
