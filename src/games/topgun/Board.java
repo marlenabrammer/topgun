@@ -179,18 +179,6 @@ public class Board extends JPanel  {
         }
     }
 
-        /*    @Override
-            public void actionPerformed(ActionEvent e) {
-        //        moveEnemy();
-                //moveEnemyShot();
-                repaint();
-
-            }*/
-
-        /*    private static ArrayList<Enemy> getEnemiesArrayList() throws Exception {
-                return enemies;
-            }*/
-
     private void drawEnemy(Graphics g, int offset){
             for (Enemy enemy : enemies){
             if (enemy.isVisible()){
@@ -212,15 +200,6 @@ public class Board extends JPanel  {
                 g.drawImage(weapon.getImage(), offset, y+enemy.getImage().getHeight(null), null);
             }
         }
-    }
-
-
-    private void movePlane(){
-        if (x>=PANEL_WIDTH-pilot.getImage().getWidth(null) || x< 0){ //so that it doesn't go off the border
-            xVelocity = xVelocity * -1;
-        } //goes back and forth
-        x += xVelocity;
-        repaint();
     }
 
     private class TAdapter extends KeyAdapter {
