@@ -124,7 +124,7 @@ public class Board extends JPanel  {
            // message = "Game won!";
         }
 
-        pilot.act();
+        pilot.move();
 
         if (weapon.isVisible()) {
 
