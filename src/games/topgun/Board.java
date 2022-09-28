@@ -60,7 +60,7 @@ public class Board extends JPanel  {
         for(int i=0; i<NUM_ENEMIES; i++){
             enemies.add(new Enemy(x+offset*i,y));
         }
-
+        System.out.println("Size of the enemies array is: " + enemies.size());
     }
 
     private void drawPilot(Graphics g) {

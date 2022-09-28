@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 class Enemy extends Plane {
     private Missile weapon;
-    private final int y_Velocity = 3;
+    private final int y_Velocity = 1;
 
     public Enemy(int x_coordinate, int y_coordinate) {
         initEnemy(x_coordinate, y_coordinate);
@@ -23,7 +23,6 @@ class Enemy extends Plane {
 
     public void move() {
         setY_coordinate(getY_coordinate() + y_Velocity);
-       // repaint();
     }
 
     public Missile getWeapon() {
