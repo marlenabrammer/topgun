@@ -1,8 +1,7 @@
 package games.topgun.app;
 
 import games.topgun.Board;
-
-import javax.swing.*;
+import javax.swing.JFrame;
 
 public class Frame extends JFrame {
 
