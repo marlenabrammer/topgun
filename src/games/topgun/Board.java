@@ -3,7 +3,10 @@ package games.topgun;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -29,7 +32,7 @@ public class Board extends JPanel {
     private boolean gameRunning = true;
     private Timer timer;
     private int points = 0;
-    private int life = 1;
+    private int life = 3;
 
     // Constructor(s)
     public Board() {
@@ -45,7 +48,6 @@ public class Board extends JPanel {
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         pilot = new Pilot();
         weapon = new Weapon();
-        // int numberOfEnemies = (int) (Math.random() * 10 + 1);
         //create enemies
         for(int i = 0; i < INITIAL_NUM_ENEMIES; i++){
             ENEMIES.add(new Enemy((PANEL_WIDTH / INITIAL_NUM_ENEMIES) * i + OFFSET, 0));
@@ -137,7 +139,7 @@ public class Board extends JPanel {
     }
 
     private void update() {
-        if (deadEnemies == 6) {
+        if (deadEnemies == INITIAL_NUM_ENEMIES) {
             gameRunning = false;
             timer.stop();
         }
@@ -209,8 +211,7 @@ public class Board extends JPanel {
                         && missileX_coordinate <= pilotX_coordinate + pilot.getImage().getWidth(null)
                         && missileY_coordinate >= pilotY_coordinate
                         && missileY_coordinate <= pilotY_coordinate + pilot.getImage().getHeight(null)) {
-                    pilot.setImage(explosion);
-                    pilot.setDead(true);
+                    pilotHit();
                     missile.setDestroyed(true);
                 }
             }
@@ -238,12 +239,19 @@ public class Board extends JPanel {
                         && enemyX_coordinate <= pilotX_coordinate + pilot.getImage().getWidth(null)
                         && enemyY_coordinate >= pilotY_coordinate
                         && enemyY_coordinate <= pilotY_coordinate + pilot.getImage().getHeight(null)) {
-                    pilot.setImage(explosion);
-                    pilot.setDead(true);
+                    pilotHit();
                     enemy.setDead(true);
                 }
             }
             enemy.move();
+        }
+    }
+
+    private void pilotHit() {
+        life--;
+        if (life == 0) {
+            pilot.setImage(explosion);
+            pilot.setDead(true);
         }
     }
 
