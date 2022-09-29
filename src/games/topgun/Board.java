@@ -15,13 +15,15 @@ import java.util.List;
 import java.util.Random;
 
 public class Board extends JPanel {
+    // Static variables and constants
     private final static int PANEL_WIDTH = 1000;
     private final static int PANEL_HEIGHT = 1000;
     private final static int INITIAL_NUM_ENEMIES = 6;
     private final Image backgroundImage = new ImageIcon("img/terrain.jpg").getImage();
     private final Image explosion = new ImageIcon("img/bang.png").getImage();
+    private final List<Enemy> ENEMIES = new ArrayList<>();
 
-    private List<Enemy> enemies = new ArrayList<>();
+    // Instance variables
     private Pilot pilot;
     private Weapon weapon;
     private int deadEnemies = 0;
@@ -30,26 +32,28 @@ public class Board extends JPanel {
     private int points = 0;
     private int life = 1;
 
+    // Constructor(s)
     public Board() {
         initBoard();
     }
 
+    // Helper methods used for initializing and drawing
     private void initBoard() {
         addKeyListener(keyAdapter);
         setFocusable(true);
         timer = new Timer(15, new Board.GameCycle());
-        gameInit();
+        initGame();
         timer.start();
     }
 
-    private void gameInit() {
+    private void initGame() {
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         pilot = new Pilot();
         weapon = new Weapon();
         // int numberOfEnemies = (int) (Math.random() * 10 + 1);
         //create enemies
         for(int i = 0; i < INITIAL_NUM_ENEMIES; i++){
-            enemies.add(new Enemy((PANEL_WIDTH / INITIAL_NUM_ENEMIES) * i + 40, 0));
+            ENEMIES.add(new Enemy((PANEL_WIDTH / INITIAL_NUM_ENEMIES) * i + 40, 0));
         }
     }
 
@@ -75,7 +79,7 @@ public class Board extends JPanel {
     }
 
     private void drawEnemies(Graphics g) {
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : ENEMIES) {
             if (enemy.isVisible()) {
                 g.drawImage(enemy.getImage(), enemy.getX_coordinate(), enemy.getY_coordinate(), this);
             }
@@ -102,12 +106,17 @@ public class Board extends JPanel {
     }
 
     private void drawEnemyWeapon(Graphics g) {
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : ENEMIES) {
             Enemy.Missile missile = enemy.getMissile();
             if (!missile.isDestroyed()) {
                 g.drawImage(missile.getImage(), missile.getX_coordinate(), missile.getY_coordinate(), this);
             }
         }
+    }
+
+    private void drawScore(Graphics g) {
+        g.drawString("Score: " + this.points, 10, 890);
+        g.drawString("Life:   "  + this.life, 10, 905);
     }
 
     private void gameOver(Graphics g) {
@@ -122,7 +131,6 @@ public class Board extends JPanel {
             g.drawImage(gameOverImage.getImage(), 0, 0, this);
         }
     }
-
 
     @Override
     public void paintComponent(Graphics g) {
@@ -144,7 +152,7 @@ public class Board extends JPanel {
             int shotX = weapon.getX_coordinate();
             int shotY = weapon.getY_coordinate();
 
-            for (Enemy enemy : enemies) {
+            for (Enemy enemy : ENEMIES) {
 
                 int enemyX = enemy.getX_coordinate();
                 int enemyY = enemy.getY_coordinate();
@@ -178,7 +186,7 @@ public class Board extends JPanel {
         }
 
         // Make enemies move
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : ENEMIES) {
 
             int enemyY_coordinate = enemy.getY_coordinate();
             int enemyX_coordinate = enemy.getX_coordinate();
@@ -210,7 +218,7 @@ public class Board extends JPanel {
         // Shoot enemy missiles
         Random generator = new Random();
 
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : ENEMIES) {
 
             int shot = generator.nextInt(10);
             Enemy.Missile missile = enemy.getMissile();
@@ -239,7 +247,6 @@ public class Board extends JPanel {
                 }
             }
 
-
             if (!missile.isDestroyed()) {
                 int missileVelocity = 2;
                 missile.setY_coordinate(missile.getY_coordinate() + missileVelocity);
@@ -252,20 +259,16 @@ public class Board extends JPanel {
         }
     }
 
-    private void drawScore(Graphics g) {
-        g.drawString("Score: " + this.points, 10, 890);
-        g.drawString("Life:   "  + this.life, 10, 905);
-    }
-    
-    private void runGame() {
-        update();
-        repaint();
-    }
-
+    // Inner classes
     private class GameCycle implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             runGame();
+        }
+
+        private void runGame() {
+            update();
+            repaint();
         }
     }
 
