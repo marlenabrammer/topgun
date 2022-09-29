@@ -4,22 +4,17 @@ import java.awt.Image;
 
 class Plane {
     // Instance variables
-    private boolean visible;
+    private boolean visible = true;
     private Image image;
     private boolean dead;
 
     private int x_coordinate;
     private int y_coordinate;
     private int x_prime;
+    private int y_prime;
 
     // Constructor(s)
     public Plane() {
-        setVisible(true);
-    }
-
-    // Business method(s)
-    public void die() {
-        setVisible(false);
     }
 
     // Accessor(s)
@@ -69,5 +64,13 @@ class Plane {
 
     public void setX_prime(int x_prime) {
         this.x_prime = x_prime;
+    }
+
+    public int getY_prime() {
+        return y_prime;
+    }
+
+    public void setY_prime(int y_prime) {
+        this.y_prime = y_prime;
     }
 }
