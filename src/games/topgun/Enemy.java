@@ -6,14 +6,14 @@ class Enemy extends Plane {
     private Missile missile;
 
     public Enemy(int x_coordinate, int y_coordinate) {
+        String enemyPath = "img/enemy.png";
+        ImageIcon enemy = new ImageIcon(enemyPath);
+        setImage(enemy.getImage());
+
         setX_coordinate(x_coordinate);
         setY_coordinate(y_coordinate);
 
         missile = new Missile(x_coordinate, y_coordinate);
-
-        String enemyPath = "img/enemy.png";
-        ImageIcon enemy = new ImageIcon(enemyPath);
-        setImage(enemy.getImage());
     }
 
     public void move() {
