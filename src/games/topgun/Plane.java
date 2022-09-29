@@ -4,7 +4,7 @@ import java.awt.Image;
 
 class Plane {
     // Instance variables
-    private boolean visible;
+    private boolean visible = true;
     private Image image;
     private boolean dead;
 
@@ -15,12 +15,6 @@ class Plane {
 
     // Constructor(s)
     public Plane() {
-        setVisible(true);
-    }
-
-    // Business method(s)
-    public void die() {
-        setVisible(false);
     }
 
     // Accessor(s)

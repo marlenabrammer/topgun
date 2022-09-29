@@ -8,15 +8,11 @@ public class Pilot extends Plane {
     private int height;
 
     public Pilot() {
-        initPilot();
-    }
-
-    private void initPilot() {
         String pilotPath = "img/pilot.png";
         ImageIcon pilot = new ImageIcon(pilotPath);
+        setImage(pilot.getImage());
         width = pilot.getImage().getWidth(null);
         height = pilot.getImage().getHeight(null);
-        setImage(pilot.getImage());
 
         int START_X_COORDINATE = 500;
         setX_coordinate(START_X_COORDINATE);

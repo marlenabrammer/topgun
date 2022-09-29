@@ -6,10 +6,6 @@ class Enemy extends Plane {
     private Missile missile;
 
     public Enemy(int x_coordinate, int y_coordinate) {
-        initEnemy(x_coordinate, y_coordinate);
-    }
-
-    private void initEnemy(int x_coordinate, int y_coordinate) {
         setX_coordinate(x_coordinate);
         setY_coordinate(y_coordinate);
 

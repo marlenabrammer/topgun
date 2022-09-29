@@ -1,4 +1,4 @@
- package games.topgun;
+package games.topgun;
 
 import javax.swing.ImageIcon;
 
@@ -15,10 +15,10 @@ class Weapon extends Plane {
         ImageIcon weapon = new ImageIcon(pilotWeapon);
         setImage(weapon.getImage());
 
-        int horizontal = 17;
-        setX_coordinate(x_coordinate + horizontal);
+        int horizontalPosition = 17;
+        setX_coordinate(x_coordinate + horizontalPosition);
 
-        int vertical = 1;
-        setY_coordinate(y_coordinate - vertical);
+        int verticalPosition = 1;
+        setY_coordinate(y_coordinate - verticalPosition);
     }
 }
