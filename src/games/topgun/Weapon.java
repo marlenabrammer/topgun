@@ -2,9 +2,7 @@
 
 import javax.swing.ImageIcon;
 
-import javax.swing.*;
-
-public class Weapon extends Plane {
+class Weapon extends Plane {
     public Weapon() {
     }
 
@@ -12,7 +10,7 @@ public class Weapon extends Plane {
         initWeapon(x_coordinate, y_coordinate);
     }
 
-    private void initWeapon(int x_coordinate, int y_coordinate) {
+    public void initWeapon(int x_coordinate, int y_coordinate) {
         String pilotWeapon = "img/bullet_pilot.png";
         ImageIcon weapon = new ImageIcon(pilotWeapon);
         setImage(weapon.getImage());

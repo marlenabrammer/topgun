@@ -50,20 +50,20 @@ public class Pilot extends Plane {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
-           setX_prime(-8);
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            setX_prime(8);
-        }
-
         if (key == KeyEvent.VK_UP) {
             setY_prime(-4);
         }
 
+        if (key == KeyEvent.VK_LEFT) {
+           setX_prime(-8);
+        }
+
         if (key == KeyEvent.VK_DOWN) {
             setY_prime(4);
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+            setX_prime(8);
         }
     }
 
