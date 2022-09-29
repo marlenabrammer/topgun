@@ -26,7 +26,7 @@ public class Board extends JPanel {
     private boolean gameRunning = true;
     private Timer timer;
     private int points = 0;
-    private int life = 1;
+    private int life = 3;
 
     public Board() {
         initBoard();
@@ -199,9 +199,15 @@ public class Board extends JPanel {
                         && enemyY_coordinate >= (pilotY_coordinate)
                         && enemyY_coordinate <= (pilotY_coordinate + pilot.getImage().getHeight(null))) {
 
-                    pilot.setImage(explosion);
-                    pilot.setDead(true);
                     enemy.setDead(true);
+                    isPilotDead();
+
+
+
+//                        pilot.setImage(explosion);
+//                        pilot.setDead(true);
+
+
                 }
             }
             enemy.move();
@@ -233,9 +239,13 @@ public class Board extends JPanel {
                         && missileY_coordinate >= (pilotY_coordinate)
                         && missileY_coordinate <= (pilotY_coordinate + pilot.getImage().getHeight(null))) {
 
-                    pilot.setImage(explosion);
-                    pilot.setDead(true);
                     missile.setDestroyed(true);
+
+                        isPilotDead();
+//                        pilot.setImage(explosion);
+//                        pilot.setDead(true);
+
+
                 }
             }
 
@@ -252,6 +262,14 @@ public class Board extends JPanel {
         }
     }
 
+    private void isPilotDead () {
+        life -=1;
+        if (life ==0) {
+            pilot.setImage(explosion);
+            pilot.setDead(true);
+        }
+
+    }
     private void drawScore(Graphics g) {
 
         g.setFont(new Font("Arial",Font.BOLD,18));
