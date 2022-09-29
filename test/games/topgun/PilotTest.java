@@ -22,7 +22,7 @@ public class PilotTest {
       pilot2 = new Pilot();
 
 
-      weapon1 = new Weapon((230-6),(450+1));
+      weapon1 = new Weapon((500-17),(850+1));
 
     }
     @Test
