@@ -58,6 +58,7 @@ public class Board extends JPanel {
             drawPilot(g);
             drawPilotWeapon(g);
             drawEnemyWeapon(g);
+            drawScore(g);
         }
         else {
             if (timer.isRunning()) {
@@ -72,12 +73,12 @@ public class Board extends JPanel {
     }
 
     private void drawEnemies(Graphics g) {
-        for (Enemy alien : enemies) {
-            if (alien.isVisible()) {
-                g.drawImage(alien.getImage(), alien.getX_coordinate(), alien.getY_coordinate(), this);
+        for (Enemy enemy : enemies) {
+            if (enemy.isVisible()) {
+                g.drawImage(enemy.getImage(), enemy.getX_coordinate(), enemy.getY_coordinate(), this);
             }
-            if (alien.isDead()) {
-                alien.die();
+            if (enemy.isDead()) {
+                enemy.die();
             }
         }
     }
@@ -120,6 +121,7 @@ public class Board extends JPanel {
         }
     }
 
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -144,6 +146,7 @@ public class Board extends JPanel {
 
                 int enemyX = enemy.getX_coordinate();
                 int enemyY = enemy.getY_coordinate();
+
 
                 if (enemy.isVisible() && weapon.isVisible()) {
                     if (shotX >= (enemyX)
@@ -233,6 +236,7 @@ public class Board extends JPanel {
                 }
             }
 
+
             if (!missile.isDestroyed()) {
                 int missileVelocity = 2;
                 missile.setY_coordinate(missile.getY_coordinate() + missileVelocity);
@@ -245,6 +249,11 @@ public class Board extends JPanel {
         }
     }
 
+    private void drawScore(Graphics g) {
+        g.drawString("Score: " + this.Points, 10, 450);
+        g.drawString("Life:   "  + this.life, 10, 465);
+    }
+    
     private void runGame() {
         update();
         repaint();

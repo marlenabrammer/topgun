@@ -1,6 +1,8 @@
-package games.topgun;
+ package games.topgun;
 
 import javax.swing.ImageIcon;
+
+import javax.swing.*;
 
 public class Weapon extends Plane {
     public Weapon() {
