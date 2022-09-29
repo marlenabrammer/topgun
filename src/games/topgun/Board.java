@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Board extends JPanel {
-    // Static variables and constants
     private final static int PANEL_WIDTH = 1000;
     private final static int PANEL_HEIGHT = 1000;
     private final static int INITIAL_NUM_ENEMIES = 6;
@@ -24,8 +23,7 @@ public class Board extends JPanel {
     private final Image explosion = new ImageIcon("img/bang.png").getImage();
     private final List<Enemy> ENEMIES = new ArrayList<>();
     private final Timer timer;
-
-    // Instance variables
+    
     private Pilot pilot;
     private Weapon weapon;
     private int deadEnemies = 0;
@@ -33,12 +31,11 @@ public class Board extends JPanel {
     private int points = 0;
     private int life = 3;
 
-    // Constructor(s)
     public Board() {
         addKeyListener(keyAdapter);
         setFocusable(true);
         timer = new Timer(15, new Board.GameCycle());
-        initGame();
+        gameInit();
         timer.start();
     }
 
@@ -76,12 +73,12 @@ public class Board extends JPanel {
     }
 
     private void drawEnemies(Graphics g) {
-        for (Enemy enemy : ENEMIES) {
+        for (Enemy enemy : enemies) {
             if (enemy.isVisible()) {
                 g.drawImage(enemy.getImage(), enemy.getX_coordinate(), enemy.getY_coordinate(), null);
             }
             if (enemy.isDead()) {
-                enemy.setVisible(false);
+                enemy.die();
             }
         }
     }
@@ -91,7 +88,7 @@ public class Board extends JPanel {
             g.drawImage(pilot.getImage(), pilot.getX_coordinate(), pilot.getY_coordinate(), null);
         }
         if (pilot.isDead()) {
-            pilot.setVisible(false);
+            pilot.die();
             gameRunning = false;
         }
     }
@@ -103,18 +100,12 @@ public class Board extends JPanel {
     }
 
     private void drawEnemyWeapon(Graphics g) {
-        for (Enemy enemy : ENEMIES) {
-            Missile missile = enemy.getMissile();
+        for (Enemy enemy : enemies) {
+            Enemy.Missile missile = enemy.getMissile();
             if (!missile.isDestroyed()) {
-                g.drawImage(missile.getImage(), missile.getX_coordinate(), missile.getY_coordinate(), null);
+                g.drawImage(missile.getImage(), missile.getX_coordinate(), missile.getY_coordinate(), this);
             }
         }
-    }
-
-    private void drawScore(Graphics g) {
-        g.setFont(new Font("Arial",Font.BOLD,18));
-        g.drawString("Score: " + this.points, 10, 890);
-        g.drawString("Life:   "  + this.life, 10, 905);
     }
 
     private void gameOver(Graphics g) {
@@ -124,13 +115,17 @@ public class Board extends JPanel {
             ImageIcon winnerImage = new ImageIcon(winner);
             g.drawImage(winnerImage.getImage(), 0, 0, null);
             drawScore(g);
+            System.out.println("Points (current game): " + points);
+
         }
         else if (pilot.isDead()) {
             ImageIcon gameOverImage = new ImageIcon(gameOver);
             g.drawImage(gameOverImage.getImage(), 0, 0, null);
             drawScore(g);
+            System.out.println("Points (current game): " + points);
         }
     }
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -139,6 +134,7 @@ public class Board extends JPanel {
     }
 
     private void update() {
+
         // Stop the game when the player hits all enemies
         if (deadEnemies == INITIAL_NUM_ENEMIES) {
             gameRunning = false;
@@ -167,7 +163,7 @@ public class Board extends JPanel {
 
                 // If both the enemy and the player weapons are visible
                 if (enemy.isVisible() && weapon.isVisible()) {
-
+                
                     // Check the positions of both enemy and weapon
                     if (weaponX_coordinate >= enemyX_coordinate
                             && weaponX_coordinate <= enemyX_coordinate + enemy.getImage().getWidth(null)
@@ -222,6 +218,8 @@ public class Board extends JPanel {
             // Store the coords of the enemy missile
             int missileX_coordinate = missile.getX_coordinate();
             int missileY_coordinate = missile.getY_coordinate();
+            int pilotX_coordinate = pilot.getX_coordinate();
+            int pilotY_coordinate = pilot.getY_coordinate();
 
             // Check if the player and enemy missile are visible
             if (pilot.isVisible() && !missile.isDestroyed()) {
@@ -246,6 +244,8 @@ public class Board extends JPanel {
                     missile.setDestroyed(true);
                 }
             }
+        }
+    }
 
             // If the enemy reaches the bottom of the screen make it disappear
             if (enemy.isVisible()) {
@@ -283,7 +283,7 @@ public class Board extends JPanel {
         public void actionPerformed(ActionEvent e) {
             runGame();
         }
-
+        
         private void runGame() {
             update();
             repaint();
