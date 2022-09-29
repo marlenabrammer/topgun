@@ -27,6 +27,8 @@ public class Board extends JPanel {
     private int deadEnemies = 0;
     private boolean gameRunning = true;
     private Timer timer;
+    private int points = 0;
+    private int life = 1;
 
     public Board() {
         initBoard();
@@ -156,6 +158,7 @@ public class Board extends JPanel {
 
                         enemy.setImage(explosion);
                         enemy.setDead(true);
+                        points += 100;
                         deadEnemies++;
                         weapon.die();
                     }
@@ -250,8 +253,8 @@ public class Board extends JPanel {
     }
 
     private void drawScore(Graphics g) {
-        g.drawString("Score: " + this.Points, 10, 450);
-        g.drawString("Life:   "  + this.life, 10, 465);
+        g.drawString("Score: " + this.points, 10, 890);
+        g.drawString("Life:   "  + this.life, 10, 905);
     }
     
     private void runGame() {
