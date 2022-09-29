@@ -5,16 +5,14 @@ import java.awt.event.KeyEvent;
 
 public class Pilot extends Plane {
     private int width;
+    private int height;
 
     public Pilot() {
-        initPilot();
-    }
-
-    private void initPilot() {
         String pilotPath = "img/pilot.png";
         ImageIcon pilot = new ImageIcon(pilotPath);
-        width = pilot.getImage().getWidth(null);
         setImage(pilot.getImage());
+        width = pilot.getImage().getWidth(null);
+        height = pilot.getImage().getHeight(null);
 
         int START_X_COORDINATE = 500;
         setX_coordinate(START_X_COORDINATE);
@@ -25,37 +23,63 @@ public class Pilot extends Plane {
 
     public void move() {
          setX_coordinate(getX_coordinate() + getX_prime());
+         setY_coordinate(getY_coordinate() + getY_prime());
+
+         if (getY_coordinate() <= 2) {
+             setY_coordinate(2);
+         }
+
          if (getX_coordinate() <= 2) {
              setX_coordinate(2);
          }
 
-         if (getX_coordinate() >= 950 - 2 * width) { //TODO:FIX MAGIC NUMBER
-             setX_coordinate(950 - 2 * width);
+         //TODO:FIX MAGIC NUMBER
+         if (getX_coordinate() >= 1000 - 1 * width) {
+             setX_coordinate(1000 - 1 * width);
          }
 
+        if (getY_coordinate() >= 950 - 2 * height) {
+            setY_coordinate(950 - 2 * height);
+        }
     }
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
+        if (key == KeyEvent.VK_UP) {
+            setY_prime(-4);
+        }
+
         if (key == KeyEvent.VK_LEFT) {
-           setX_prime(-4);
+           setX_prime(-8);
+        }
+
+        if (key == KeyEvent.VK_DOWN) {
+            setY_prime(4);
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            setX_prime(4);
+            setX_prime(8);
         }
     }
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
+        if (key == KeyEvent.VK_UP) {
+            setY_prime(0);
+        }
+
         if (key == KeyEvent.VK_LEFT) {
             setX_prime(0);
         }
 
         if (key == KeyEvent.VK_RIGHT) {
             setX_prime(0);
+        }
+
+        if (key == KeyEvent.VK_DOWN) {
+            setY_prime(0);
         }
     }
 }

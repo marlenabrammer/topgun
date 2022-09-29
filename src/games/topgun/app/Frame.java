@@ -10,7 +10,6 @@ public class Frame extends JFrame {
 
     public Frame(){
         panel = new Board();
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel); //adds Board to the frame
         this.pack();
