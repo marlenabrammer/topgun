@@ -42,7 +42,7 @@ public class Board extends JPanel {
         timer.start();
     }
 
-    // Helper methods used for initializing and drawing
+    // Helper methods used for initializing and drawing the board
     private void initGame() {
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         pilot = new Pilot();
