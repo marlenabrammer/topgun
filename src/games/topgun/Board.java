@@ -27,9 +27,6 @@ public class Board extends JPanel {
     private int deadEnemies = 0;
     private boolean gameRunning = true;
     private Timer timer;
-    private int points = 0;
-    private int life = 1;
-
 
     public Board() {
         initBoard();
@@ -159,7 +156,6 @@ public class Board extends JPanel {
 
                         enemy.setImage(explosion);
                         enemy.setDead(true);
-                        points += 100;
                         deadEnemies++;
                         weapon.die();
                     }
@@ -240,6 +236,7 @@ public class Board extends JPanel {
                 }
             }
 
+
             if (!missile.isDestroyed()) {
                 int missileVelocity = 2;
                 missile.setY_coordinate(missile.getY_coordinate() + missileVelocity);
@@ -253,8 +250,8 @@ public class Board extends JPanel {
     }
 
     private void drawScore(Graphics g) {
-        g.drawString("Score: " + points, 10, 890);
-        g.drawString("Life:   "  + life, 10, 905);
+        g.drawString("Score: " + this.Points, 10, 450);
+        g.drawString("Life:   "  + this.life, 10, 465);
     }
     
     private void runGame() {
