@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Board extends JPanel {
+    private static final String dataFilePath = "data/highScore.dat";
     private final static int PANEL_WIDTH = 1000;
     private final static int PANEL_HEIGHT = 1000;
     private final static int INITIAL_NUM_ENEMIES = 6;
@@ -115,11 +116,14 @@ public class Board extends JPanel {
             ImageIcon winnerImage = new ImageIcon(winner);
             g.drawImage(winnerImage.getImage(), 0, 0, this);
             drawScore(g);
+            System.out.println("Points (current game): " + points);
+
         }
         else if (pilot.isDead()) {
             ImageIcon gameOverImage = new ImageIcon(gameOver);
             g.drawImage(gameOverImage.getImage(), 0, 0, this);
             drawScore(g);
+            System.out.println("Points (current game): " + points);
         }
     }
 
@@ -200,8 +204,7 @@ public class Board extends JPanel {
                         && enemyY_coordinate <= (pilotY_coordinate + pilot.getImage().getHeight(null))) {
 
                     enemy.setDead(true);
-                    isPilotDead();
-
+ isPilotDead();
 
 
 //                        pilot.setImage(explosion);
