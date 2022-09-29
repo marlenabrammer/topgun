@@ -17,17 +17,10 @@ public class Weapon extends Plane {
         ImageIcon weapon = new ImageIcon(pilotWeapon);
         setImage(weapon.getImage());
 
+        int horizontal = 17;
+        setX_coordinate(x_coordinate + horizontal);
 
-        var shotImg = "src/images/shot.png";
-        var ii = new ImageIcon(shotImg);
-        setImage(ii.getImage());
-
-        int H_SPACE = 6;
-        setX_coordinate(x_coordinate + H_SPACE);
-
-        int V_SPACE = 20;
-        setY_coordinate(y_coordinate - V_SPACE);
+        int vertical = 1;
+        setY_coordinate(y_coordinate - vertical);
     }
-
-
 }

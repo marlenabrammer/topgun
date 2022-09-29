@@ -16,21 +16,21 @@ public class Pilot extends Plane {
         width = pilot.getImage().getWidth(null);
         setImage(pilot.getImage());
 
-        int START_X_COORDINATE = 230;
+        int START_X_COORDINATE = 500;
         setX_coordinate(START_X_COORDINATE);
 
-        int START_Y_COORDINATE = 450;
+        int START_Y_COORDINATE = 850;
         setY_coordinate(START_Y_COORDINATE);
     }
 
-    public void act() {
+    public void move() {
          setX_coordinate(getX_coordinate() + getX_prime());
          if (getX_coordinate() <= 2) {
              setX_coordinate(2);
          }
 
-         if (getX_coordinate() >= 500 - 2 * width) { //TODO:FIX MAGIC NUMBER
-             setX_coordinate(500 - 2 * width);
+         if (getX_coordinate() >= 950 - 2 * width) { //TODO:FIX MAGIC NUMBER
+             setX_coordinate(950 - 2 * width);
          }
 
     }
@@ -39,11 +39,11 @@ public class Pilot extends Plane {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-           setX_prime(-2);
+           setX_prime(-4);
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            setX_prime(2);
+            setX_prime(4);
         }
     }
 
