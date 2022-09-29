@@ -33,7 +33,6 @@ public class Pilot extends Plane {
              setX_coordinate(2);
          }
 
-         //TODO:FIX MAGIC NUMBER
          if (getX_coordinate() >= 1000 - 1 * width) {
              setX_coordinate(1000 - 1 * width);
          }
