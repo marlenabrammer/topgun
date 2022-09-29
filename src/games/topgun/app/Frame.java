@@ -1,16 +1,15 @@
 package games.topgun.app;
 
 import games.topgun.Board;
-import games.topgun.Board2;
 
 import javax.swing.*;
 
 public class Frame extends JFrame {
 
-    Board2 panel;
+    Board panel;
 
     public Frame(){
-        panel = new Board2();
+        panel = new Board();
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel); //adds Board to the frame

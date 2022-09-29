@@ -1,8 +1,8 @@
 package games.topgun;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -11,69 +11,59 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-public class Board extends JPanel  {
-    private final static int PANEL_WIDTH = 500;
-    private final static int PANEL_HEIGHT = 500;
-    private final static int NUM_ENEMIES = 4;
-    private Dimension d;
-    private Boolean playingGame = true;
-    private int enemiesUnalived = 0;
+public class Board extends JPanel {
+    private final static int PANEL_WIDTH = 1000;
+    private final static int PANEL_HEIGHT = 1000;
+    private final static int INITIAL_NUM_ENEMIES = 6;
+    private final Image backgroundImage = new ImageIcon("img/terrain.jpg").getImage();
+    private final Image explosion = new ImageIcon("img/bang.png").getImage();
+
+    private List<Enemy> enemies = new ArrayList<>();
     private Pilot pilot;
     private Weapon weapon;
-    private Image backgroundImage;
-    private Image explosion;
-    private Image gameOverImage;
+    private int deadEnemies = 0;
+    private boolean gameRunning = true;
     private Timer timer;
-    private int xVelocity =1;
-    private int x =0;
-    private int y =0;
-    private int offset = PANEL_WIDTH / NUM_ENEMIES;
-    private final static String filepath = "img/";
-    private static ArrayList<Enemy> enemies = new ArrayList<>();
-
 
     public Board() {
         initBoard();
     }
 
     private void initBoard() {
-
-        addKeyListener(new TAdapter());
+        addKeyListener(keyAdapter);
         setFocusable(true);
-        d = new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
-        timer = new Timer(15, new GameCycle());
+        timer = new Timer(15, new Board.GameCycle());
         gameInit();
-
         timer.start();
-
-
     }
 
     private void gameInit() {
-
-        this.setPreferredSize(new Dimension(PANEL_WIDTH,PANEL_HEIGHT));
+        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         pilot = new Pilot();
-        backgroundImage = new ImageIcon(filepath + "terrain.jpg").getImage();
         weapon = new Weapon();
+        // int numberOfEnemies = (int) (Math.random() * 10 + 1);
         //create enemies
-        for(int i=0; i<NUM_ENEMIES; i++){
-            enemies.add(new Enemy(x+offset*i,y));
-        }
-        System.out.println("Size of the enemies array is: " + enemies.size());
-    }
-
-    private void drawPilot(Graphics g) {
-
-        if (pilot.isVisible()) {
-
-        g.drawImage(pilot.getImage(), pilot.getX_coordinate(), pilot.getY_coordinate(), this);
+        for(int i = 0; i < INITIAL_NUM_ENEMIES; i++){
+            enemies.add(new Enemy((PANEL_WIDTH / INITIAL_NUM_ENEMIES) * i + 40, 0));
         }
     }
 
-    private void drawPilotWeapon(Graphics g){
-        if(weapon.isVisible()) {
-            g.drawImage(weapon.getImage(), weapon.getX_coordinate(), weapon.getY_coordinate(), null);
+    private void draw(Graphics g) {
+        if (gameRunning) {
+            drawBackground(g);
+            drawEnemies(g);
+            drawPilot(g);
+            drawPilotWeapon(g);
+            drawEnemyWeapon(g);
+        }
+        else {
+            if (timer.isRunning()) {
+                timer.stop();
+            }
+            gameOver(g);
         }
     }
 
@@ -81,162 +71,215 @@ public class Board extends JPanel  {
         g.drawImage(backgroundImage,0,0,this);
     }
 
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-
-        doDrawing(g) ;
-
+    private void drawEnemies(Graphics g) {
+        for (Enemy alien : enemies) {
+            if (alien.isVisible()) {
+                g.drawImage(alien.getImage(), alien.getX_coordinate(), alien.getY_coordinate(), this);
+            }
+            if (alien.isDead()) {
+                alien.die();
+            }
+        }
     }
 
-    private void doDrawing(Graphics g) {
-        if(playingGame) {
-            drawBackground(g);
-            drawPilot(g);
-            drawPilotWeapon(g);
+    private void drawPilot(Graphics g) {
+        if (pilot.isVisible()) {
+            g.drawImage(pilot.getImage(), pilot.getX_coordinate(), pilot.getY_coordinate(), this);
+        }
+        if (pilot.isDead()) {
+            pilot.die();
+            gameRunning = false;
+        }
+    }
 
-            for (Enemy enemy : enemies) { //location of the enemy planes + bullets at first
-                drawEnemy(g, enemy.getX_coordinate());
-                drawEnemyWeapon(g, enemy.getX_coordinate());
+    private void drawPilotWeapon(Graphics g) {
+        if (weapon.isVisible()) {
+            g.drawImage(weapon.getImage(), weapon.getX_coordinate(), weapon.getY_coordinate(), this);
+        }
+    }
+
+    private void drawEnemyWeapon(Graphics g) {
+        for (Enemy enemy : enemies) {
+            Enemy.Missile missile = enemy.getMissile();
+            if (!missile.isDestroyed()) {
+                g.drawImage(missile.getImage(), missile.getX_coordinate(), missile.getY_coordinate(), this);
             }
         }
-        else {
-            if(timer.isRunning()){
-                timer.stop();
-            }
-            gameOver(g);
-        }
-
     }
 
     private void gameOver(Graphics g) {
-        gameOverImage = new ImageIcon(filepath + "terrain.jpg").getImage();
-        g.drawImage(gameOverImage, 0,0,null);
-
+        String gameOver = "img/gameover.png";
+        String winner = "img/winner.png";
+        if(!pilot.isDead() && !gameRunning) {
+            ImageIcon winnerImage = new ImageIcon(winner);
+            g.drawImage(winnerImage.getImage(), 0, 0, this);
+        }
+        else if (pilot.isDead()) {
+            ImageIcon gameOverImage = new ImageIcon(gameOver);
+            g.drawImage(gameOverImage.getImage(), 0, 0, this);
+        }
     }
 
-    public void update () {
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        draw(g);
+    }
 
-        if (enemiesUnalived == NUM_ENEMIES) {
+    private void update() {
+        if (deadEnemies == 6) {
 
-            playingGame = false;
+            gameRunning = false;
             timer.stop();
-            System.out.println("game is stopped");
-           // message = "Game won!";
         }
 
         pilot.move();
 
         if (weapon.isVisible()) {
 
-            int weaponX = weapon.getX_coordinate();
-            int weaponY = weapon.getY_coordinate();
+            int shotX = weapon.getX_coordinate();
+            int shotY = weapon.getY_coordinate();
 
-            for(Enemy enemy: enemies){
+            for (Enemy enemy : enemies) {
 
                 int enemyX = enemy.getX_coordinate();
                 int enemyY = enemy.getY_coordinate();
 
-                if(enemy.isVisible() && weapon.isVisible()){
-                    //create impact boundary
-                    if(weaponX >= (enemyX)
-                            && weaponX <= (enemyX +enemy.getImage().getWidth(null))
-                            && weaponY >= (enemyY)
-                            && weaponY <= (enemyY + enemy.getImage().getHeight(null)))
-                    {
-                        explosion = new ImageIcon(filepath+ "bang.png").getImage();
+                if (enemy.isVisible() && weapon.isVisible()) {
+                    if (shotX >= (enemyX)
+                            && shotX <= (enemyX + enemy.getImage().getWidth(null))
+                            && shotY >= (enemyY)
+                            && shotY <= (enemyY + enemy.getImage().getHeight(null))) {
+
                         enemy.setImage(explosion);
                         enemy.setDead(true);
-                        enemiesUnalived++;
-                        System.out.println("count of dead enemies: " + enemiesUnalived);
+                        deadEnemies++;
                         weapon.die();
                     }
                 }
             }
 
-            int y = weapon.getY_coordinate();
-            y -= 4;
-            if (y < 0) {
+            int bulletY_coordinate = weapon.getY_coordinate();
+            int bulletVelocity = 10;
+            bulletY_coordinate -= bulletVelocity;
+
+            int topBoundary = 0;
+            if (bulletY_coordinate < topBoundary) {
                 weapon.die();
-             //   System.out.println("weapon goes off screen");
             } else {
-                weapon.setY_coordinate(y);
+                weapon.setY_coordinate(bulletY_coordinate);
             }
         }
 
+        // Make enemies move
         for (Enemy enemy : enemies) {
+
+            int enemyY_coordinate = enemy.getY_coordinate();
+            int enemyX_coordinate = enemy.getX_coordinate();
+            int pilotX_coordinate = pilot.getX_coordinate();
+            int pilotY_coordinate = pilot.getY_coordinate();
+
             if (enemy.isVisible()) {
-
-                int y = enemy.getY_coordinate();
-
-                if (y > 500) {
+                int bottomBoundary = 1000;
+                if (enemyY_coordinate > bottomBoundary) {
                     enemy.die();
+                }
+            }
+
+            if (pilot.isVisible() && !enemy.isDead()) {
+
+                if (enemyX_coordinate >= (pilotX_coordinate)
+                        && enemyX_coordinate <= (pilotX_coordinate + pilot.getImage().getWidth(null))
+                        && enemyY_coordinate >= (pilotY_coordinate)
+                        && enemyY_coordinate <= (pilotY_coordinate + pilot.getImage().getHeight(null))) {
+
+                    pilot.setImage(explosion);
+                    pilot.setDead(true);
+                    enemy.setDead(true);
                 }
             }
             enemy.move();
         }
-    }
-    private void doGameCycle () {
-        update();
-        repaint();
-    }
-    private class GameCycle implements ActionListener {
 
-        @Override
-        public void actionPerformed (ActionEvent e) {
-            doGameCycle();
-        }
-    }
+        // Shoot enemy missiles
+        Random generator = new Random();
 
-    private void drawEnemy(Graphics g, int offset){
-            for (Enemy enemy : enemies){
-            if (enemy.isVisible()){
-                g.drawImage(enemy.getImage(), offset, y, null);
+        for (Enemy enemy : enemies) {
+
+            int shot = generator.nextInt(10);
+            Enemy.Missile missile = enemy.getMissile();
+
+            if (shot == generator.nextInt(15) && enemy.isVisible() && missile.isDestroyed()) {
+                missile.setDestroyed(false);
+                missile.setX_coordinate(enemy.getX_coordinate() + 15);
+                missile.setY_coordinate(enemy.getY_coordinate() + 20);
             }
 
-            if(enemy.isDead()){
-                 enemy.die();
-                    }
+            int missileX_coordinate = missile.getX_coordinate();
+            int missileY_coordinate = missile.getY_coordinate();
+            int pilotX_coordinate = pilot.getX_coordinate();
+            int pilotY_coordinate = pilot.getY_coordinate();
+
+            if (pilot.isVisible() && !missile.isDestroyed()) {
+
+                if (missileX_coordinate >= (pilotX_coordinate)
+                        && missileX_coordinate <= (pilotX_coordinate + pilot.getImage().getWidth(null))
+                        && missileY_coordinate >= (pilotY_coordinate)
+                        && missileY_coordinate <= (pilotY_coordinate + pilot.getImage().getHeight(null))) {
+
+                    pilot.setImage(explosion);
+                    pilot.setDead(true);
+                    missile.setDestroyed(true);
                 }
             }
 
+            if (!missile.isDestroyed()) {
+                int missileVelocity = 2;
+                missile.setY_coordinate(missile.getY_coordinate() + missileVelocity);
 
-    private void drawEnemyWeapon(Graphics g, int offset) {
-        for (Enemy enemy : enemies) {
-            Enemy.Missile weapon = enemy.getMissile();
-            if (enemy.isVisible()) {
-                g.drawImage(weapon.getImage(), offset, y+enemy.getImage().getHeight(null), null);
+                int bottomBoundary = 950;
+                if (missile.getY_coordinate() >= bottomBoundary) {
+                    missile.setDestroyed(true);
+                }
             }
         }
     }
 
-    private class TAdapter extends KeyAdapter {
+    private void runGame() {
+        update();
+        repaint();
+    }
 
+    private class GameCycle implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            runGame();
+        }
+    }
+
+    KeyAdapter keyAdapter = new KeyAdapter() {
         @Override
         public void keyReleased(KeyEvent e) {
-
             pilot.keyReleased(e);
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-
             pilot.keyPressed(e);
 
-            int x = pilot.getX_coordinate();
-
+            int pilotX_coordinate = pilot.getX_coordinate();
+            int pilotY_coordinate = pilot.getY_coordinate();
 
             int key = e.getKeyCode();
 
             if (key == KeyEvent.VK_SPACE) {
 
-                //  if (inGame) {
-
-                if (!weapon.isVisible()) {
-
-                    weapon = new Weapon(x, pilot.getY_coordinate());
+                if (gameRunning) {
+                    if (!weapon.isVisible()) {
+                        weapon = new Weapon(pilotX_coordinate, pilotY_coordinate);
+                    }
                 }
-                //}
             }
         }
-    }
+    };
 }
