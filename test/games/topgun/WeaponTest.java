@@ -16,7 +16,7 @@ public class WeaponTest {
     public void setUp() throws Exception {
         pilot1 = new Pilot();
 
-        weapon1 = new Weapon((230-6),(450+1));
+        weapon1 = new Weapon((500-17),(850+1));
         weapon2 = new Weapon(pilot1.getX_coordinate(), pilot1.getY_coordinate());
 
     }

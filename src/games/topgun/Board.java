@@ -3,9 +3,7 @@ package games.topgun;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -116,10 +114,12 @@ public class Board extends JPanel {
         if(!pilot.isDead() && !gameRunning) {
             ImageIcon winnerImage = new ImageIcon(winner);
             g.drawImage(winnerImage.getImage(), 0, 0, this);
+            drawScore(g);
         }
         else if (pilot.isDead()) {
             ImageIcon gameOverImage = new ImageIcon(gameOver);
             g.drawImage(gameOverImage.getImage(), 0, 0, this);
+            drawScore(g);
         }
     }
 
@@ -253,6 +253,8 @@ public class Board extends JPanel {
     }
 
     private void drawScore(Graphics g) {
+
+        g.setFont(new Font("Arial",Font.BOLD,18));
         g.drawString("Score: " + this.points, 10, 890);
         g.drawString("Life:   "  + this.life, 10, 905);
     }
