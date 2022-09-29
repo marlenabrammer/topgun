@@ -153,14 +153,14 @@ public class Board extends JPanel {
 
             for (Enemy enemy : ENEMIES) {
 
-                int enemyX = enemy.getX_coordinate();
-                int enemyY = enemy.getY_coordinate();
+                int enemyX_coordinate = enemy.getX_coordinate();
+                int enemyY_coordinate = enemy.getY_coordinate();
 
                 if (enemy.isVisible() && weapon.isVisible()) {
-                    if (weaponX_coordinate >= (enemyX)
-                            && weaponX_coordinate <= (enemyX + enemy.getImage().getWidth(null))
-                            && weaponY_coordinate >= (enemyY)
-                            && weaponY_coordinate <= (enemyY + enemy.getImage().getHeight(null))) {
+                    if (weaponX_coordinate >= (enemyX_coordinate)
+                            && weaponX_coordinate <= (enemyX_coordinate + enemy.getImage().getWidth(null))
+                            && weaponY_coordinate >= (enemyY_coordinate)
+                            && weaponY_coordinate <= (enemyY_coordinate + enemy.getImage().getHeight(null))) {
 
                         enemy.setImage(explosion);
                         enemy.setDead(true);
@@ -183,7 +183,7 @@ public class Board extends JPanel {
             }
         }
 
-        // Make enemies move
+        // Make enemies move and shoot
         Random generator = new Random();
 
         for (Enemy enemy : ENEMIES) {
@@ -204,10 +204,10 @@ public class Board extends JPanel {
 
             if (pilot.isVisible() && !missile.isDestroyed()) {
 
-                if (missileX_coordinate >= (pilotX_coordinate)
-                        && missileX_coordinate <= (pilotX_coordinate + pilot.getImage().getWidth(null))
-                        && missileY_coordinate >= (pilotY_coordinate)
-                        && missileY_coordinate <= (pilotY_coordinate + pilot.getImage().getHeight(null))) {
+                if (missileX_coordinate >= pilotX_coordinate
+                        && missileX_coordinate <= pilotX_coordinate + pilot.getImage().getWidth(null)
+                        && missileY_coordinate >= pilotY_coordinate
+                        && missileY_coordinate <= pilotY_coordinate + pilot.getImage().getHeight(null)) {
                     pilot.setImage(explosion);
                     pilot.setDead(true);
                     missile.setDestroyed(true);
@@ -232,10 +232,10 @@ public class Board extends JPanel {
             }
 
             if (pilot.isVisible() && !enemy.isDead()) {
-                if (enemyX_coordinate >= (pilotX_coordinate)
-                        && enemyX_coordinate <= (pilotX_coordinate + pilot.getImage().getWidth(null))
-                        && enemyY_coordinate >= (pilotY_coordinate)
-                        && enemyY_coordinate <= (pilotY_coordinate + pilot.getImage().getHeight(null))) {
+                if (enemyX_coordinate >= pilotX_coordinate
+                        && enemyX_coordinate <= pilotX_coordinate + pilot.getImage().getWidth(null)
+                        && enemyY_coordinate >= pilotY_coordinate
+                        && enemyY_coordinate <= pilotY_coordinate + pilot.getImage().getHeight(null)) {
                     pilot.setImage(explosion);
                     pilot.setDead(true);
                     enemy.setDead(true);
