@@ -12,7 +12,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Board extends JPanel  {
+public class  Board extends JPanel  {
     private final static int PANEL_WIDTH = 500;
     private final static int PANEL_HEIGHT = 500;
     private final static int NUM_ENEMIES = 4;
@@ -31,6 +31,8 @@ public class Board extends JPanel  {
     private int offset = PANEL_WIDTH / NUM_ENEMIES;
     private final static String filepath = "img/";
     private static ArrayList<Enemy> enemies = new ArrayList<>();
+    int Points = -100;
+    int life = 1;
 
 
     public Board() {
@@ -93,6 +95,7 @@ public class Board extends JPanel  {
             drawBackground(g);
             drawPilot(g);
             drawPilotWeapon(g);
+            drawScore(g);
 
             for (Enemy enemy : enemies) { //location of the enemy planes + bullets at first
                 drawEnemy(g, enemy.getX_coordinate());
@@ -113,6 +116,8 @@ public class Board extends JPanel  {
         g.drawImage(gameOverImage, 0,0,null);
 
     }
+
+
 
     public void update () {
 
@@ -138,16 +143,17 @@ public class Board extends JPanel  {
 
                 if(enemy.isVisible() && weapon.isVisible()){
                     //create impact boundary
-                    if(weaponX >= (enemyX)
+                    if(weaponX <= (enemyX)
                             && weaponX <= (enemyX +enemy.getImage().getWidth(null))
                             && weaponY >= (enemyY)
                             && weaponY <= (enemyY + enemy.getImage().getHeight(null)))
                     {
                         explosion = new ImageIcon(filepath+ "bang.png").getImage();
                         enemy.setImage(explosion);
-                        enemy.setDead(true);
-                        enemiesUnalived++;
+                        enemy.setDead(true); this.Points += 100;
+
                         System.out.println("count of dead enemies: " + enemiesUnalived);
+                        enemiesUnalived++;
                         weapon.die();
                     }
                 }
@@ -192,6 +198,10 @@ public class Board extends JPanel  {
                 }
             }
 
+    private void drawScore(Graphics g) {
+        g.drawString("Score: " + this.Points, 10, 450);
+        g.drawString("Life:   "  + this.life, 10, 465);
+    }
 
     private void drawEnemyWeapon(Graphics g, int offset) {
         for (Enemy enemy : enemies) {
